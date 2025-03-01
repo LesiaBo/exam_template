@@ -54,6 +54,17 @@ class Grid:
             self.set(j, self.height - 1, self.wall)
 
 
+    def make_additional_walls(self, part_x, part_y):
+        for i in range(int(self.height/part_x)):
+            self.set(int((self.width - 1)/part_x), i, self.wall)
+
+        for j in range(1, int((self.width - 1)/part_y)):
+            #self.set(j, 0, self.wall)
+            self.set(j, int((self.height - 1)/part_y), self.wall)
+        # to avoid having "rooms"where a player can't enter:
+        self.set(int((self.width - 1)/part_x), int((self.height - 1) / part_y), self.empty)
+        self.set(int((self.width - 1)/part_x), int((self.height - 1) / part_y - 1), self.empty)
+
     # Används i filen pickups.py
     def get_random_x(self):
         """Slumpa en x-position på spelplanen"""
@@ -62,7 +73,6 @@ class Grid:
     def get_random_y(self):
         """Slumpa en y-position på spelplanen"""
         return random.randint(0, self.height-1)
-
 
     def is_empty(self, x, y):
         """Returnerar True om det inte finns något på aktuell ruta"""
